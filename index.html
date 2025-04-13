@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohan Muthu - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Header Animation Styles */
+        .creative-header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .creative-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(252, 166, 31, 0.1) 0%, transparent 30%),
+                        linear-gradient(to bottom right, transparent 60%, rgba(252, 166, 31, 0.05) 100%);
+            z-index: -1;
+            animation: float 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(-20px) translateX(20px); }
+        }
+
+        .word-animation {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .char {
+            font-size: 4vw;
+            font-weight: bold;
+            transform: translateY(100px);
+            opacity: 0;
+            animation: fadeUp 1s forwards;
+            animation-delay: calc(0.1s * var(--char-index));
+            color:blue;
+        }
+
+        @keyframes fadeUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+
+        /* Circular Progress Bar Styles */
+        .skills-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .skills-progress {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .skill-circle-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .skill-circle-container:hover {
+            transform: scale(1.05);
+        }
+        
+        .skill-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-circle:hover {
+            box-shadow: 0 8px 20px rgba(252, 166, 31, 0.3);
+        }
+        
+        .skill-circle::before {
+            content: '';
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            background: #000;
+        }
+        
+        .circle-progress {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(#fca61f var(--progress), #222 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .circle-inner {
+            position: relative;
+            width: 85%;
+            height: 85%;
+            border-radius: 50%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+            font-size: 24px;
+        }
+        
+        .skill-name {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+        }
+        
+        .skills-description {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .skills-title {
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .skills-text {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .download-btn {
+            background: #fca61f;
+            color: black;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            background: #e6951a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(252, 166, 31, 0.3);
+        }
+        
+        /* Animation for circles */
+        @keyframes circle-fill {
+            0% {
+                background: conic-gradient(#fca61f 0%, #222 0%);
+            }
+            100% {
+                background: conic-gradient(#fca61f var(--progress), #222 0%);
+            }
+        }
+        
+        .circle-progress {
+            animation: circle-fill 1.5s ease-out forwards;
+        }
+        
+        /* Touch feedback */
+        .skill-circle:active {
+            transform: scale(0.95);
+        }
+
+        /* Enhanced Contact Details Styles */
+        .contact-details {
+            flex: 1;
+            min-width: 250px;
+            background: #222;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .contact-info-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contact-label {
+            font-weight: bold;
+            color: #fca61f;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .contact-value {
+            color: #ddd;
+            font-size: 16px;
+        }
+        
+        /* Make address stand out more */
+        .address-item {
+            background: #333;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #fca61f;
+        }
+        
+        /* Section styles */
+        #about, #skills, #contact {
+            padding: 100px 20px;
+        }
+        
+        #skills {
+            background: #111;
+        }
+        
+        #contact {
+            background: #111;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #000;
+        }
+        
+        /* Form styles */
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #222;
+            color: #fff;
+        }
+        
+        .contact-form button {
+            background: #fca61f;
+            color: black;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-form button:hover {
+            background: #e6951a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Creative Header Section -->
+    <header class="creative-header">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <img src="resume.jpeg" alt="Profile Photo" 
+                 style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid #471ffc; margin-bottom: 20px;">
+            
+            <div class="word-animation">
+                <h1 class="word">
+                    <span class="char" style="--char-index: 0">R</span>
+                    <span class="char" style="--char-index: 1">O</span>
+                    <span class="char" style="--char-index: 2">H</span>
+                    <span class="char" style="--char-index: 3">A</span>
+                    <span class="char" style="--char-index: 4">N</span>
+                </h1>
+            </div>
+            
+            <div class="word-animation" style="animation-delay: 0.5s">
+                <h1 class="word">
+                    <span class="char" style="--char-index: 5">M</span>
+                    <span class="char" style="--char-index: 6">U</span>
+                    <span class="char" style="--char-index: 7">T</span>
+                    <span class="char" style="--char-index: 8">H</span>
+                    <span class="char" style="--char-index: 9">U</span>
+                </h1>
+            </div>
+            
+            <p style="margin: 20px 0; font-weight: 300; opacity: 0.8; max-width: 600px;">
+                Computer Science Student | Tech Ethusiast
+            </p>
+            
+            <div class="social-icons" style="margin: 20px 0;">
+              <a href="https://github.com/Rohan-osshub" target="_blank" style="color: white; margin: 0 15px; font-size: 1.5em; transition: color 0.3s;"><i class="fab fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/rohan-muthu-in/" target="_blank" style="color: white; margin: 0 15px; font-size: 1.5em; transition: color 0.3s;"><i class="fab fa-linkedin"></i></a>
+              <a href="https://instagram.com/r.oh4n" target="_blank" style="color: white; margin: 0 15px; font-size: 1.5em; transition: color 0.3s;"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        
+        <nav style="margin-top: 40px;">
+            <ul style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 30px;">
+                <li><a href="#about" style="text-decoration: none; color: white; font-weight: bold; transition: color 0.3s;">About</a></li>
+                <li><a href="#skills" style="text-decoration: none; color: white; font-weight: bold; transition: color 0.3s;">Skills</a></li>
+                <li><a href="#contact" style="text-decoration: none; color: white; font-weight: bold; transition: color 0.3s;">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" style="text-align: center;">
+        <div style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
+            <h2>About Me</h2>
+            <p style="text-align: center; line-height: 1.8;">
+                Hello! I'm Rohan Muthu, a Computer Science Student at VIT, Vellore.<br>
+                I'm a Second Year Undergrad passionate about coding and web development.<br>
+                I am a talkative person and quite outgoing at the same time.<br><br>
+                People who work hard inspire me.
+            </p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="skills-container">
+            <h2 class="skills-title">My Skills</h2>
+            
+            <div class="skills-progress">
+                <div class="skill-circle-container">
+                    <div class="skill-circle">
+                        <div class="circle-progress" style="--progress: 90%">
+                            <div class="circle-inner">90%</div>
+                        </div>
+                    </div>
+                    <span class="skill-name">HTML & CSS & JavaScript</span>
+                </div>
+                
+                <div class="skill-circle-container">
+                    <div class="skill-circle">
+                        <div class="circle-progress" style="--progress: 75%">
+                            <div class="circle-inner">75%</div>
+                        </div>
+                    </div>
+                    <span class="skill-name">C / C++</span>
+                </div>
+                
+                <div class="skill-circle-container">
+                    <div class="skill-circle">
+                        <div class="circle-progress" style="--progress: 80%">
+                            <div class="circle-inner">80%</div>
+                        </div>
+                    </div>
+                    <span class="skill-name">PYTHON</span>
+                </div>
+                
+                <div class="skill-circle-container">
+                    <div class="skill-circle">
+                        <div class="circle-progress" style="--progress: 30%">
+                            <div class="circle-inner">30%</div>
+                        </div>
+                    </div>
+                    <span class="skill-name">ReactJS</span>
+                </div>
+            </div>
+            
+            <div class="skills-description">
+                <h3 style="color: #fca61f; font-size: 24px; margin-bottom: 15px;">Academically Acquired</h3>
+                <p class="skills-text"></p>
+                <a href="#" class="download-btn">Download Resume</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 style="text-align: center; color: #fca61f;">Get in Touch</h2>
+        <h3 style="text-align: center; color: #fca61f; margin-bottom: 40px;">Any Questions? Feel Free to Contact</h3>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1000px; margin: auto; gap: 30px;">
+
+            <!-- Enhanced Left side: Contact Details -->
+            <div class="contact-details">
+                <div class="contact-info-item address-item">
+                    <img src="https://img.icons8.com/color/48/000000/marker.png" alt="Address" width="24" height="24">
+                    <div class="contact-info-text">
+                        <span class="contact-label">ADDRESS</span>
+                        <span class="contact-value">Lamar Homes, Adliya, Bahrain</span>
+                    </div>
+                </div>
+                
+                <div class="contact-info-item">
+                    <img src="https://img.icons8.com/color/48/000000/phone.png" alt="Phone" width="24" height="24">
+                    <div class="contact-info-text">
+                        <span class="contact-label">PHONE (INDIA)</span>
+                        <span class="contact-value">+91 9123564978</span>
+                    </div>
+                </div>
+                
+                <div class="contact-info-item">
+                    <img src="https://img.icons8.com/color/48/000000/phone.png" alt="Phone" width="24" height="24">
+                    <div class="contact-info-text">
+                        <span class="contact-label">PHONE (BAHRAIN)</span>
+                        <span class="contact-value">+973 35420550</span>
+                    </div>
+                </div>
+                
+                <div class="contact-info-item">
+                    <img src="https://img.icons8.com/color/48/000000/filled-message.png" alt="Email" width="24" height="24">
+                    <div class="contact-info-text">
+                        <span class="contact-label">EMAIL</span>
+                        <span class="contact-value">rohan@muthu.org</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right side: Contact Form -->
+            <div class="contact-form" style="flex: 1; min-width: 250px;">
+                <form>
+                    <input type="text" placeholder="Name" required>
+                    <input type="email" placeholder="E-mail" required>
+                    <input type="tel" placeholder="Mobile No.">
+                    <textarea placeholder="Message" rows="5"></textarea>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Rohan Muthu</p>
+    </footer>
+
+    <button onclick="scrollToTop()" id="btn-back-to-top" style="
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      background-color: #fca61f;
+      color: black;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      cursor: pointer;
+      display: none;
+    ">↑</button>
+
+    <script>
+        // Animate characters on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const chars = document.querySelectorAll('.char');
+            chars.forEach((char, index) => {
+                char.style.setProperty('--char-index', index);
+            });
+        });
+
+        // Back to top button
+        const mybutton = document.getElementById("btn-back-to-top");
+        window.onscroll = function () {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        };
+        
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        // Circle interaction effects
+        document.querySelectorAll('.skill-circle').forEach(circle => {
+            circle.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.95)';
+            });
+            
+            circle.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
+            
+            // Click animation
+            circle.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+        
+        // Animate circles when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'circle-fill 1.5s ease-out forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.circle-progress').forEach(progress => {
+            observer.observe(progress);
+        });
+    </script>
+</body>
+</html>
